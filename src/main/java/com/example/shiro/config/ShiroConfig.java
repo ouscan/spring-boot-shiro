@@ -1,18 +1,28 @@
 package com.example.shiro.config;
 
+
+import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
 import com.example.shiro.common.ShiroRealm;
+import com.example.shiro.listener.ShiroSessionListener;
 import org.apache.shiro.codec.Base64;
 import org.apache.shiro.mgt.SecurityManager;
+import org.apache.shiro.session.SessionListener;
+import org.apache.shiro.session.mgt.SessionManager;
+import org.apache.shiro.session.mgt.eis.MemorySessionDAO;
+import org.apache.shiro.session.mgt.eis.SessionDAO;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.CookieRememberMeManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.servlet.SimpleCookie;
+import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.crazycake.shiro.RedisCacheManager;
 import org.crazycake.shiro.RedisManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.LinkedHashMap;
 
 @Configuration
@@ -56,6 +66,7 @@ public class ShiroConfig {
         securityManager.setRealm(shiroRealm());
         securityManager.setRememberMeManager(rememberMeManager());
         securityManager.setCacheManager(cacheManager());
+        securityManager.setSessionManager(sessionManager());
         return  securityManager;
     }
 
@@ -106,6 +117,27 @@ public class ShiroConfig {
         RedisCacheManager redisCacheManager = new RedisCacheManager();
         redisCacheManager.setRedisManager(redisManager());
         return redisCacheManager;
+    }
+
+    @Bean
+    public ShiroDialect shiroDialect() {
+        return new ShiroDialect();
+    }
+
+    @Bean
+    public SessionDAO sessionDAO() {
+        MemorySessionDAO sessionDAO = new MemorySessionDAO();
+        return sessionDAO;
+    }
+
+    @Bean
+    public SessionManager sessionManager() {
+        DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
+        Collection<SessionListener> listeners = new ArrayList<SessionListener>();
+        listeners.add(new ShiroSessionListener());
+        sessionManager.setSessionListeners(listeners);
+        sessionManager.setSessionDAO(sessionDAO());
+        return sessionManager;
     }
 
 }
