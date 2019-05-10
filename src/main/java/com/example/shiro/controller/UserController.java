@@ -16,15 +16,16 @@ public class UserController {
         return "user";
     }
 
-    @RequiresPermissions("user:add")
     @RequestMapping("add")
+    @RequiresPermissions("user:add")
     public String userAdd(Model model) {
         model.addAttribute("value", "新增用户");
         return "user";
     }
 
-    @RequiresPermissions("user:delete")
+
     @RequestMapping("delete")
+    @RequiresPermissions("user:delete")
     public String userDelete(Model model) {
         model.addAttribute("value", "删除用户");
         return "user";

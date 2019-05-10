@@ -50,6 +50,12 @@
 			<version>1.4.0</version>
 		</dependency>
 
+		<!--<dependency>
+			<groupId>org.apache.shiro</groupId>
+			<artifactId>shiro-spring-boot-web-starter</artifactId>
+			<version>1.4.0</version>
+		</dependency>-->
+
 		<!-- mysql驱动 -->
 		<dependency>
 			<groupId>mysql</groupId>
@@ -67,6 +73,13 @@
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<version>1.16.22</version>
+		</dependency>
+
+		<!-- shiro-redis -->
+		<dependency>
+			<groupId>org.crazycake</groupId>
+			<artifactId>shiro-redis</artifactId>
+			<version>2.4.2.1-RELEASE</version>
 		</dependency>
 	</dependencies>
 

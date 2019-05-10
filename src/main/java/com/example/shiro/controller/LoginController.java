@@ -1,6 +1,7 @@
 package com.example.shiro.controller;
 
 import com.example.shiro.common.ResponseBo;
+import com.example.shiro.common.ShiroRealm;
 import com.example.shiro.entity.User;
 import com.example.shiro.util.MD5Utils;
 import org.apache.shiro.SecurityUtils;

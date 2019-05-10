@@ -29,6 +29,7 @@ public class ShiroRealm extends AuthorizingRealm {
 
     /**
      * 获取用户角色和权限
+     * 当访问到页面的时候，链接配置了相应的权限或者shiro标签才会执行此方法否则不会执行
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
@@ -63,7 +64,7 @@ public class ShiroRealm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
 
         // 获取用户输入的用户名密码
-        String userName = (String) authenticationToken.getPrincipal();
+        String userName = (String) authenticationToken.getPrincipal();//获取用户名，默认和login.html中的username对应。
         String password = new String((char[])authenticationToken.getCredentials());
 
         System.out.println("用户" + userName + "认证-----ShiroRealm.doGetAuthenticationInfo");
